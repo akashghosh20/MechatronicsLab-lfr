@@ -23,6 +23,7 @@ float kp =22 ,kd = 38, ki = 1.7;//tune it
 int sensorVal[8];
 int sum = 0;
 int lFlag=0,rFlag=0;
+int count = 0;
 
 // ----------------- Function Prototypes -------------------
 void readSensor();
@@ -181,22 +182,25 @@ void Search(){
   Serial.println("------------------------");
   Serial.println("Searching "); 
 
-  readSensor();
-  if(sum > 24){
-    softLeft();
-  }else if(sum < 24){
+//   readSensor();
+//   if(sum > 24){
+//     softLeft();
+//   }else if(sum < 24){
+//     softRight();
+//   }else if(sum == 24){
+//     Forward();
+//   }else{
+//     Stop();
+//     delay(500);
+
+//   }
+//   Serial.println("------- Searching ----------");
+// }
     softRight();
-  }else if(sum == 24){
-    Forward();
-  }else{
-    Stop();
-    delay(500);
+    readSensor();
 
-  }
-  Serial.println("------- Searching ----------");
+ 
 }
-
-
 // -------------------> Read Sensor and Logics <------------------
 
 void readSensor() {
@@ -219,17 +223,19 @@ void readSensor() {
 
 void logic()
 {
-  if(sum == 231  || sum == 246 || sum == 207 || sum == 230 || sum == 199) { //191 223 239 247 254 251 63 159 250 249 242 143
+  if(sum == 231|| sum == 230 || sum == 199) { //191 223 239 247 254 251 63 159 250 249 242 143
     Forward();
   }else if(sum==0){  
       Stop();
-  }else if(sum == 224 || sum == 240 || sum == 192){
+  }else if(sum == 224 || sum == 240 || sum == 192 || sum == 230 || sum == 242 || sum == 248 || sum == 250 ){
     softLeft();
-  }else if(sum == 15 || sum == 7 || sum == 6){
+  }else if(sum == 15 || sum == 7 || sum == 6 || sum == 31 || sum == 63 || sum == 127 || sum == 159 || sum == 207){
     softRight();
   }else if(sum == 255){
     Search();
-  }else{
+  }
+  
+  else{
     Serial.println("No condition is satisfied");
       readSensor();
       Forward();
